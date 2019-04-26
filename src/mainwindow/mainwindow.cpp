@@ -7,6 +7,7 @@ Mainwindow::Mainwindow(QWidget *parent) : QMainWindow(parent)
 {
     setWindowTitle(tr("Image"));
     setGeometry(300,300,512,512);
+    setMinimumSize(256,256);
     setMouseTracking(true);
 
     if(!loadPlugin()){

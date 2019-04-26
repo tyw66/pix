@@ -7,3 +7,4 @@ SOURCES += \
     mainwindow.cpp
 
 DESTDIR = $${PWD}/../../bin
+

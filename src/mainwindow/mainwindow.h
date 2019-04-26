@@ -2,7 +2,6 @@
 #define DRAWWINDOW_H
 
 #include <QMainWindow>
-#include <QHBoxLayout>
 #include <QMouseEvent>
 #include <QPainter>
 
@@ -29,7 +28,6 @@ private:
 private:
     ImgInterface* m_interface;
     Param m_param;
-
     QImage m_image;            //帧图像数据
 
 };
