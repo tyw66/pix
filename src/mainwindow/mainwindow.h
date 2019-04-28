@@ -1,37 +1,26 @@
-#ifndef DRAWWINDOW_H
-#define DRAWWINDOW_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QMouseEvent>
-#include <QPainter>
 
-#include "interface.h"
+#include "renderwidget.h"
+
+namespace Ui {
+class MainWindow;
+}
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
-    explicit MainWindow(QWidget *parent = NULL);
-
-protected:
-    void mouseMoveEvent(QMouseEvent* ev);
-
-    void paintEvent(QPaintEvent* ev );
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
 
 private:
-    void renderImg();
-    /**
-     * @brief 加载插件，填充m_interface对象
-     * @return
-     */
-    bool loadPlugin();
-private:
-    ImgInterface* m_interface;
-    Param m_param;
-    QImage m_image;            //帧图像数据
+    Ui::MainWindow *ui;
 
-
-
+    RenderWidget* m_renderWindow;
 };
 
-#endif // DRAWWINDOW_H
+#endif // MAINWINDOW_H
