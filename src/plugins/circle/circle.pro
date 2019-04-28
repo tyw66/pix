@@ -1,4 +1,4 @@
-TARGET = gradual
+TARGET = funny
 TEMPLATE = lib
 CONFIG += plugin
 
@@ -6,7 +6,7 @@ DESTDIR = $${PWD}/../../../bin/plugin
 INCLUDEPATH += ../../mainwindow
 
 HEADERS += \
-    gradual.h
+    circle.h
 
 SOURCES += \
-    gradual.cpp
+    circle.cpp

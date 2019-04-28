@@ -7,11 +7,11 @@
 
 #include "interface.h"
 
-class Mainwindow : public QMainWindow
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit Mainwindow(QWidget *parent = NULL);
+    explicit MainWindow(QWidget *parent = NULL);
 
 protected:
     void mouseMoveEvent(QMouseEvent* ev);
@@ -29,6 +29,8 @@ private:
     ImgInterface* m_interface;
     Param m_param;
     QImage m_image;            //帧图像数据
+
+
 
 };
 

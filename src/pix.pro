@@ -5,7 +5,6 @@
 TEMPLATE = subdirs
 SUBDIRS  = mainwindow \
 		  plugins/gradual \
-    funny \
-    test_funny
+		  plugins/circle \
 
 

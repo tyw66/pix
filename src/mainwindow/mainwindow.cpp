@@ -2,10 +2,11 @@
 #include <QPluginLoader>
 #include <QMessageBox>
 #include <QDir>
+#include<QMenuBar>
 
-Mainwindow::Mainwindow(QWidget *parent) : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    setWindowTitle(tr("Image"));
+    setWindowTitle(tr("Pix"));
     setGeometry(300,300,512,512);
     setMinimumSize(256,256);
     setMouseTracking(true);
@@ -19,7 +20,7 @@ Mainwindow::Mainwindow(QWidget *parent) : QMainWindow(parent)
     renderImg();
 }
 
-bool Mainwindow::loadPlugin()
+bool MainWindow::loadPlugin()
 {
     QDir pluginDir("./plugin");
 
@@ -35,7 +36,7 @@ bool Mainwindow::loadPlugin()
     return false;
 }
 
-void Mainwindow::mouseMoveEvent(QMouseEvent *ev)
+void MainWindow::mouseMoveEvent(QMouseEvent *ev)
 {
     m_param.mouse_posX = ev->x();
     m_param.mouse_posY = ev->y();
@@ -43,13 +44,13 @@ void Mainwindow::mouseMoveEvent(QMouseEvent *ev)
     renderImg();
 }
 
-void Mainwindow::renderImg()
+void MainWindow::renderImg()
 {
     m_interface->paintImg(m_image, m_param);
     update();
 }
 
-void Mainwindow::paintEvent(QPaintEvent *ev)
+void MainWindow::paintEvent(QPaintEvent *ev)
 {
     QPainter p(this);
     p.drawImage(ev->rect(),m_image);

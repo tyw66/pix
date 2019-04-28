@@ -8,6 +8,7 @@
 struct Param
 {
     Param() {}
+
     int mouse_posX, mouse_posY; //鼠标
 
 };
