@@ -21,16 +21,8 @@ public:
     void paintImg(QImage& img, const Param& param);
 
 private:
-    /**
-     * @brief sample
-     * @param px
-     * @param py
-     * @param width
-     * @param height
-     * @param param
-     * @return
-     */
-    QColor sample(int px, int py, int width, int height, const Param &param);
+
+    QColor sample(int xIndex, int yIndex, const QImage &img, const Param &pm);
 
 };
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>408</width>
+    <height>238</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <layout class="QVBoxLayout" name="mainLayout"/>
+     <layout class="QGridLayout" name="mainLayout"/>
     </item>
    </layout>
   </widget>
@@ -25,7 +25,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>408</width>
      <height>26</height>
     </rect>
    </property>
@@ -34,9 +34,33 @@
      <string>Menu</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <addaction name="actionOne"/>
+    <addaction name="actionTwo"/>
+    <addaction name="actionFour"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menuWindow"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionOne">
+   <property name="text">
+    <string>One</string>
+   </property>
+  </action>
+  <action name="actionTwo">
+   <property name="text">
+    <string>Two</string>
+   </property>
+  </action>
+  <action name="actionFour">
+   <property name="text">
+    <string>Four</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

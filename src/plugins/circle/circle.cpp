@@ -8,31 +8,49 @@ CirclePlugin::CirclePlugin(QObject *parent)
 
 void CirclePlugin::paintImg(QImage &img, const Param &param)
 {
-    int width = img.width();
-    int height = img.height();
-
 //#pragma omp parallel for
-    for(int i = 0; i < height; ++i){
-        for(int j = 0; j < width; ++j){
-            img.setPixel(j,i,sample(j,i,width,height,param).rgb());
+    for(int i = 0; i < img.width(); ++i){
+        for(int j = 0; j < img.height(); ++j){
+            img.setPixel(j, i, sample(i, j, img, param).rgb());
         }
     }
 }
 
-QColor CirclePlugin::sample(int px, int py, int width, int height, const Param &param)
+QColor CirclePlugin::sample(int x, int y, const QImage& img, const Param &pm)
 {
-    int x = px - width/ 2;
-    int y = py - height/ 2;
-    int rx = param.mouse_posX - width/ 2;
-    int ry = param.mouse_posY - height/ 2;
+    //当前绘制的像素，
+    //如果它距离绘制区中心点的距离 < 鼠标到中心点绘制区中心点的距离，
+    //那么就着色
+
+    double xFactorMouse = (double)(pm.mouse_posX)/(double)(pm.drawArea_width) - 0.5;
+    double yFactorMouse = (double)(pm.mouse_posY)/(double)(pm.drawArea_height) - 0.5;
+    double dMouse = xFactorMouse * xFactorMouse + yFactorMouse * yFactorMouse;
+
+    double xFactorPixel = ((double)x/img.width()) - 0.5;
+    double yFactorPixel = ((double)y/img.height()) - 0.5;
+    double dCurPixel = xFactorPixel * xFactorPixel + yFactorPixel * yFactorPixel;
+
+    if(dCurPixel < dMouse){
+        return QColor(Qt::green);
+    }
+    else{
+        return QColor(Qt::lightGray);
+    }
+
+    /*
+    double x = x - width/ 2;
+    double y = y - height/ 2;
+    double rx = pm.mouse_posX - width/ 2;
+    double ry = pm.mouse_posY - height/ 2;
     double r = sqrt(rx * rx + ry * ry);
 
     if(x * x + y * y <  r * r){
-        return QColor(Qt::blue);
+        return QColor(Qt::green);
     }
     else{
-        return QColor(Qt::yellow);
+        return QColor(Qt::lightGray);
     }
+    */
 }
 
 //导出该插件 （插件名，插件类名）

@@ -7,9 +7,24 @@
  */
 struct Param
 {
-    Param() {}
+    Param() {
+        mouse_posX = 0;
+        mouse_posY = 0;
+        mouse_isPress = false;
+        key_code = -1;
 
-    int mouse_posX, mouse_posY; //鼠标
+        drawArea_width = 1;
+        drawArea_height = 1;
+    }
+
+
+    int drawArea_width;  //屏幕绘制区大小
+    int drawArea_height;
+    int mouse_posX; //鼠标位置
+    int mouse_posY;
+    bool mouse_isPress;
+
+    int key_code; //键盘按下的键
 
 };
 
