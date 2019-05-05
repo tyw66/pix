@@ -1,4 +1,4 @@
-TARGET = funny
+TARGET = Circle
 TEMPLATE = lib
 CONFIG += plugin
 

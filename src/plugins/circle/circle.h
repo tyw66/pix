@@ -11,6 +11,11 @@ class CirclePlugin : public QObject, public ImgInterface
 {
     Q_OBJECT
     Q_INTERFACES(ImgInterface)//告知Qt，这个类实现了哪个接口
+
+#if QT_VERSION >= 0x050000
+    Q_PLUGIN_METADATA(IID "pix.plugin.Circle")
+#endif // QT_VERSION >= 0x050000
+
 public:
     CirclePlugin(QObject *parent = NULL);
     /**

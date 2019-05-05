@@ -1,3 +1,5 @@
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 HEADERS += \
     interface.h \
     mainwindow.h \

@@ -1,12 +1,12 @@
-#include "gradual.h"
-#include <QtPlugin>
+#include "gradcolor.h"
+
 #include <QColor>
 
-Gradual::Gradual(QObject *parent)
+GradColor::GradColor(QObject *parent)
 {
 }
 
-void Gradual::paintImg(QImage &img, const Param &param)
+void GradColor::paintImg(QImage &img, const Param &param)
 {
     int w = img.width();
     int h = img.height();
@@ -27,4 +27,6 @@ void Gradual::paintImg(QImage &img, const Param &param)
 }
 
 //导出该插件 （插件名，插件类名）
-Q_EXPORT_PLUGIN2(gradual,Gradual)
+#if QT_VERSION < 0x050000
+Q_EXPORT_PLUGIN2(GradColor,GradColor)
+#endif // QT_VERSION < 0x050000

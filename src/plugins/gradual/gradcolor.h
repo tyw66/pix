@@ -2,16 +2,24 @@
 #define FUNNYWIDGET_H
 
 #include <QObject>
+#include <QtPlugin>
 #include "interface.h"
 /**
  * @brief 渐变插件
  */
-class Gradual : public QObject, public ImgInterface
+class GradColor : public QObject, public ImgInterface
 {
     Q_OBJECT
     Q_INTERFACES(ImgInterface)//告知Qt，这个类实现了哪个接口
+
+#if QT_VERSION >= 0x050000
+    Q_PLUGIN_METADATA(IID "pix.plugin.GradColor")
+#endif // QT_VERSION >= 0x050000
+
+
+
 public:
-    explicit Gradual(QObject *parent = NULL);
+    explicit GradColor(QObject *parent = NULL);
     /**
      * @brief 填充渐变图案
      * @param img

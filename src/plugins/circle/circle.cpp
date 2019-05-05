@@ -54,4 +54,6 @@ QColor CirclePlugin::sample(int x, int y, const QImage& img, const Param &pm)
 }
 
 //导出该插件 （插件名，插件类名）
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(Circle,CirclePlugin)
+#endif // QT_VERSION < 0x050000
