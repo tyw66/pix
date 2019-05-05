@@ -1,8 +1,8 @@
 #include "funnyfaceplugin.h"
 
-#include <QColor>
 
-#include "color.h"
+
+
 #include "muti_shape.h"
 #include "shape.h"
 #include "transform.h"
@@ -11,34 +11,41 @@
 FunnyFacePlugin::FunnyFacePlugin(QObject *parent) :
     QObject(parent)
 {
+    m_faceColor = Color(250,211,94);
+    m_mouth1Color = Color(20,20,20);
+    m_mouth2Color = Color(124,64,12);
+
+
 }
 
 void FunnyFacePlugin::paintImg(QImage &img, const Param &param)
 {
-    #pragma omp parallel for
-        for(int i = 0; i < img.width(); ++i){
-            for(int j = 0; j < img.height(); ++j){
-                img.setPixel(j, i, sample(i, j, img, param).rgb());
-            }
+#pragma omp parallel for
+    for(int i = 0; i < img.width(); ++i){
+        for(int j = 0; j < img.height(); ++j){
+            img.setPixel(j, i, sample(i, j, img, param).rgb());
         }
+    }
 }
 
-QColor FunnyFacePlugin::sample(int x, int y, const QImage &img, const Param &pm)
+QColor FunnyFacePlugin::sample(double x, double y, const QImage &img, const Param &pm)
 {
     //! 背景色
     QColor color(225,225,225);
 
     //! 定义坐标系
     double xPos, yPos;
-    Util::scalePointXY(x,y,xPos,yPos,1, 1);
-    Util::movePointXY(xPos, yPos, xPos, yPos, img.width()/2, img.height()/2);
+    x = x / img.width();
+    y = y / img.height();
+    Util::scalePointXY(x,y,xPos,yPos,200,200);
+    Util::movePointXY(xPos, yPos, xPos, yPos, 100, 100);
 
     double angle = pm.mouse_posY * 180.0 - 90;
     Util::rotatePointXY(xPos, yPos,xPos, yPos, angle, 0, 0);
 
     //! 加入对象构建场景
     //脸
-    Circle face(0,0, Color(250,211,94), 90);
+    Circle face(0,0, m_faceColor, 90);
     if(face.isContain(xPos,yPos)){
         color.setRgb(face.color_fill.r,face.color_fill.g,face.color_fill.b);
     }
@@ -47,8 +54,8 @@ QColor FunnyFacePlugin::sample(int x, int y, const QImage &img, const Param &pm)
     //    }
 
     //嘴巴
-    Circle mouth_top(0,-10, Color(20,20,20), 82);
-    Circle mouth_buttom(0,0, Color(124,64,12), 80);
+    Circle mouth_top(0,-10, m_mouth1Color, 82);
+    Circle mouth_buttom(0,0, m_mouth2Color, 80);
     Ring r(mouth_buttom,mouth_top);
     if(r.isContain(xPos,yPos)){
         color.setRgb(mouth_buttom.color_fill.r,mouth_buttom.color_fill.g,mouth_buttom.color_fill.b);

@@ -1,7 +1,8 @@
 #ifndef GENERICPLUGIN_H
 #define GENERICPLUGIN_H
 
-#include <QGenericPlugin>
+#include <QColor>
+#include "color.h"
 #include "interface.h"
 
 class FunnyFacePlugin : public QObject, ImgInterface
@@ -25,7 +26,14 @@ public:
 
 private:
 
-    QColor sample(int x, int y, const QImage &img, const Param &pm);
+    QColor sample(double x, double y, const QImage &img, const Param &pm);
+
+
+    Color m_faceColor;
+    Color m_mouth1Color;
+    Color m_mouth2Color;
+
+
 };
 
 #endif // GENERICPLUGIN_H
