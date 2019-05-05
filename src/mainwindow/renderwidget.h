@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QLabel>
 
 #include "interface.h"
 
@@ -49,6 +50,7 @@ private:
     Param m_param;
     QImage m_image;            //图像数据
 
+    QLabel* m_label;
 
 
 };

@@ -59,7 +59,6 @@ public:
 
 typedef struct Color3 Color;
 
-
 #endif
 
 

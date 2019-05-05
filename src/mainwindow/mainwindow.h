@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QList>
 
 #include "renderwidget.h"
 
@@ -25,13 +26,13 @@ private slots:
 
     void on_actionFour_triggered();
 
+    void on_actionAll_triggered();
+
 private:
     Ui::MainWindow *ui;
 
-    RenderWidget* m_renderWindow01;
-    RenderWidget* m_renderWindow02;
-    RenderWidget* m_renderWindow03;
-    RenderWidget* m_renderWindow04;
+    QList<RenderWidget*> m_renderWindows;
+
 };
 
 #endif // MAINWINDOW_H

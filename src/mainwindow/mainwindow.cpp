@@ -13,20 +13,15 @@ MainWindow::MainWindow(QWidget *parent) :
     setMinimumSize(256,256);
 
 
-    m_renderWindow01 = new RenderWidget(this);
-    ui->mainLayout->addWidget(m_renderWindow01,0,0);
-    m_renderWindow02 = new RenderWidget(this);
-    ui->mainLayout->addWidget(m_renderWindow02,0,1);
-    m_renderWindow03 = new RenderWidget(this);
-    ui->mainLayout->addWidget(m_renderWindow03,1,0);
-    m_renderWindow04 = new RenderWidget(this);
-    ui->mainLayout->addWidget(m_renderWindow04,1,1);
-
-    m_renderWindow02->hide();
-    m_renderWindow03->hide();
-    m_renderWindow04->hide();
-
-
+    for(int i = 0; i < 4; ++i){
+        for(int j = 0; j < 8; ++j){
+            RenderWidget *renderWindow = new RenderWidget(this);
+            ui->mainLayout->addWidget(renderWindow,i,j);
+            m_renderWindows.append(renderWindow);
+            renderWindow->hide();
+        }
+    }
+    m_renderWindows.at(0)->show();
 }
 
 MainWindow::~MainWindow()
@@ -37,21 +32,47 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionOne_triggered()
 {
-    m_renderWindow02->hide();
-    m_renderWindow03->hide();
-    m_renderWindow04->hide();
+    int index = 0;
+    for(int i = 0; i < 4; ++i){
+        for(int j = 0; j < 8; ++j){
+            m_renderWindows.at(index++)->hide();
+        }
+    }
+    m_renderWindows.at(0)->show();
 }
 
 void MainWindow::on_actionTwo_triggered()
 {
-    m_renderWindow02->show();
-    m_renderWindow03->hide();
-    m_renderWindow04->hide();
+    int index = 0;
+    for(int i = 0; i < 4; ++i){
+        for(int j = 0; j < 8; ++j){
+            m_renderWindows.at(index++)->hide();
+        }
+    }
+    m_renderWindows.at(0)->show();
+    m_renderWindows.at(1)->show();
 }
 
 void MainWindow::on_actionFour_triggered()
 {
-    m_renderWindow02->show();
-    m_renderWindow03->show();
-    m_renderWindow04->show();
+    int index = 0;
+    for(int i = 0; i < 4; ++i){
+        for(int j = 0; j < 8; ++j){
+            m_renderWindows.at(index++)->hide();
+        }
+    }
+    m_renderWindows.at(0)->show();
+    m_renderWindows.at(1)->show();
+    m_renderWindows.at(2)->show();
+    m_renderWindows.at(3)->show();
+}
+
+void MainWindow::on_actionAll_triggered()
+{
+    int index = 0;
+    for(int i = 0; i < 4; ++i){
+        for(int j = 0; j < 8; ++j){
+            m_renderWindows.at(index++)->show();
+        }
+    }
 }

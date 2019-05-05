@@ -9,6 +9,6 @@ SUBDIRS  = \
 		    plugins\
 
 
-
+QMAKE_CXXFLAGS += -std=c++11
 QMAKE_CXXFLAGS += -Wno-unused-parameter
 QMAKE_CXXFLAGS += -Wno-unused-variable

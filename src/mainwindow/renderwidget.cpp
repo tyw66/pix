@@ -12,6 +12,7 @@ RenderWidget::RenderWidget(QWidget *parent) : QWidget(parent)
     setAcceptDrops(true);
 
     m_image = QImage(512,512,QImage::Format_RGB32);
+    m_label = new QLabel(tr("Please drag file to draw."),this);
 
     if(!loadPlugin()){
         return;
@@ -32,9 +33,11 @@ bool RenderWidget::loadPlugin()
     QDir pluginDir("./plugin");
 
     foreach (QString fileName, pluginDir.entryList(QDir::Files)) {
-        QString filePathName = pluginDir.absoluteFilePath(fileName);
-        if(loadPlugin(filePathName)){
-            return true;
+        if(fileName == "default.dll"){//默认加载default.dll
+            QString filePathName = pluginDir.absoluteFilePath(fileName);
+            if(loadPlugin(filePathName)){
+                return true;
+            }
         }
     }
     return false;
@@ -42,6 +45,7 @@ bool RenderWidget::loadPlugin()
 
 bool RenderWidget::loadPlugin(const QString fileName)
 {
+    m_label->hide();
     QPluginLoader pluginLoader(fileName);
     QObject *plugin = pluginLoader.instance();
     if(plugin){
@@ -50,7 +54,10 @@ bool RenderWidget::loadPlugin(const QString fileName)
             return true;
     }
 
-    QMessageBox::information(this, "Error",tr("Could not load the plugin."));
+
+    m_label->setText(tr("Could not load the plugin."));
+    m_label->show();
+//    QMessageBox::information(this, "Error",tr("Could not load the plugin."));
     return false;
 }
 

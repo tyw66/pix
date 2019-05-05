@@ -26,14 +26,14 @@ public:
 
 private:
 
-    QColor sample(double x, double y, const QImage &img, const Param &pm);
+    QColor sample(double px, double py, double mx, double my);
 
 
     Color m_faceColor;
     Color m_mouth1Color;
     Color m_mouth2Color;
 
-
+    Color m_faceRedColor;
 };
 
 #endif // GENERICPLUGIN_H
