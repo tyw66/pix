@@ -5,7 +5,10 @@
 TEMPLATE = subdirs
 SUBDIRS  = \
 		    mainwindow \
-		    plugins/gradual \
-		    plugins/circle \
+		    libs\
+		    plugins\
 
 
+
+QMAKE_CXXFLAGS += -Wno-unused-parameter
+QMAKE_CXXFLAGS += -Wno-unused-variable

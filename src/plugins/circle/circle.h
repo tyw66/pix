@@ -19,7 +19,7 @@ class CirclePlugin : public QObject, public ImgInterface
 public:
     CirclePlugin(QObject *parent = NULL);
     /**
-     * @brief 填充滑稽表情图案
+     * @brief 画圆
      * @param img
      * @param param
      */

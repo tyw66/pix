@@ -1,5 +1,7 @@
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+DESTDIR = $${PWD}/../../bin
+
 HEADERS += \
     interface.h \
     mainwindow.h \
@@ -10,7 +12,6 @@ SOURCES += \
     mainwindow.cpp \
     renderwidget.cpp
 
-DESTDIR = $${PWD}/../../bin
 
 FORMS += \
     mainwindow.ui
