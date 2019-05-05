@@ -18,9 +18,8 @@ void CirclePlugin::paintImg(QImage &img, const Param &param)
 
 QColor CirclePlugin::sample(int x, int y, const QImage& img, const Param &pm)
 {
-    //当前绘制的像素，
-    //如果它距离绘制区中心点的距离 < 鼠标到中心点绘制区中心点的距离，
-    //那么就着色
+    //判断当前绘制的像素，
+    //距离绘制区中心点的距离  &  鼠标到中心点绘制区中心点的距离
 
     double xFactorMouse = (double)(pm.mouse_posX)/(double)(pm.drawArea_width) - 0.5;
     double yFactorMouse = (double)(pm.mouse_posY)/(double)(pm.drawArea_height) - 0.5;
@@ -30,11 +29,13 @@ QColor CirclePlugin::sample(int x, int y, const QImage& img, const Param &pm)
     double yFactorPixel = ((double)y/img.height()) - 0.5;
     double dCurPixel = xFactorPixel * xFactorPixel + yFactorPixel * yFactorPixel;
 
-    if(dCurPixel < dMouse){
-        return QColor(Qt::green);
-    }
-    else{
+    double factor = dCurPixel / dMouse;
+
+    if(factor > 1){
         return QColor(Qt::lightGray);
+    }
+    else{//factor从1->0,  颜色从（255，0，0）-> (200, 255, 255)
+        return QColor(255-55*(1-factor), 255*(1-factor) , 255*(1-factor));
     }
 
     /*
