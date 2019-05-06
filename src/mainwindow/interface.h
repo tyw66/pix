@@ -15,16 +15,20 @@ struct Param
 
         drawArea_width = 1;
         drawArea_height = 1;
-    }
 
+        timetick = 0;
+    }
 
     int drawArea_width;  //屏幕绘制区大小
     int drawArea_height;
+
     int mouse_posX; //鼠标位置
     int mouse_posY;
-    bool mouse_isPress;
 
+    bool mouse_isPress;
     int key_code; //键盘按下的键
+
+    int timetick; //计时
 
 };
 

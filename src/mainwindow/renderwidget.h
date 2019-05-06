@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QLabel>
+#include <QTimer>
 
 #include "interface.h"
 
@@ -35,23 +36,27 @@ private:
     void renderImg();
     /**
      * @brief 加载插件，填充m_interface对象
-     * @return
      */
-    bool loadPlugin();
+    void loadPlugin();
     /**
      * @brief 加载插件，填充m_interface对象
      * @param fileName
-     * @return
      */
-    bool loadPlugin(const QString fileName);
+    void loadPlugin(const QString fileName);
+
+private slots:
+    void onTimeOut();
 
 private:
     ImgInterface* m_interface;
     Param m_param;
     QImage* m_image;            //图像数据
 
+    QTimer m_timer;
+
     QLabel* m_label;
 
+    bool m_hasPlugin;
 
 };
 

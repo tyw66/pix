@@ -8,13 +8,18 @@
 
 RenderWidget::RenderWidget(QWidget *parent) : QWidget(parent)
 {
+    m_hasPlugin = false;
     setMouseTracking(true);
     setAcceptDrops(true);
 
-    m_image = new QImage(512,512,QImage::Format_RGB32);
+    m_image = new QImage(100,100,QImage::Format_RGB32);
     m_label = new QLabel(tr("Please drag file to draw."),this);
 
-    if(loadPlugin()){
+    m_timer.start(50);
+    connect(&m_timer, SIGNAL(timeout()), this, SLOT(onTimeOut()));
+
+    loadPlugin();
+    if(m_hasPlugin){
         renderImg();
     }
 }
@@ -23,40 +28,49 @@ void RenderWidget::resizeEvent(QResizeEvent *ev)
 {
     m_param.drawArea_width = ev->size().width();
     m_param.drawArea_height = ev->size().height();
+
+    if(m_hasPlugin){
+        renderImg();
+    }
 }
 
-bool RenderWidget::loadPlugin()
+void RenderWidget::loadPlugin()
 {
     QDir pluginDir("./plugin");
 
     foreach (QString fileName, pluginDir.entryList(QDir::Files)) {
-//        if(fileName == "default.dll"){//默认加载default.dll
+        if(fileName == "default.dll"){//默认加载default.dll
             QString filePathName = pluginDir.absoluteFilePath(fileName);
-            if(loadPlugin(filePathName)){
-                return true;
-            }
-//        }
+            loadPlugin(filePathName);
+        }
     }
 
-    return false;
 }
 
-bool RenderWidget::loadPlugin(const QString fileName)
+void RenderWidget::loadPlugin(const QString fileName)
 {
-    m_label->hide();
     QPluginLoader pluginLoader(fileName);
     QObject *plugin = pluginLoader.instance();
     if(plugin){
         m_interface = qobject_cast<ImgInterface*>(plugin);
-        if(m_interface)
-            return true;
+        if(m_interface){
+            m_hasPlugin = true;
+            m_label->hide();
+            return;
+        }
     }
-
 
     m_label->setText(tr("Could not load the plugin."));
     m_label->show();
-    //    QMessageBox::information(this, "Error",tr("Could not load the plugin."));
-    return false;
+    m_hasPlugin = false;
+}
+
+void RenderWidget::onTimeOut()
+{
+    m_param.timetick++;
+    if(m_hasPlugin){
+        renderImg();
+    }
 }
 
 void RenderWidget::renderImg()
@@ -79,7 +93,9 @@ void RenderWidget::mouseMoveEvent(QMouseEvent *ev)
     m_param.mouse_posY = ev->y();
     //    qDebug() << m_param.mouse_posX;
 
-    renderImg();
+    if(m_hasPlugin){
+        renderImg();
+    }
 }
 
 void RenderWidget::mousePressEvent(QMouseEvent *ev)
@@ -88,7 +104,10 @@ void RenderWidget::mousePressEvent(QMouseEvent *ev)
     m_param.mouse_posY = ev->y();
     m_param.mouse_isPress = true;
 
-    renderImg();
+
+    if(m_hasPlugin){
+        renderImg();
+    }
 }
 
 void RenderWidget::mouseReleaseEvent(QMouseEvent *ev)
@@ -97,14 +116,17 @@ void RenderWidget::mouseReleaseEvent(QMouseEvent *ev)
     m_param.mouse_posY = ev->y();
     m_param.mouse_isPress = false;
 
-    renderImg();
+    if(m_hasPlugin){
+        renderImg();
+    }
 }
 
 void RenderWidget::keyPressEvent(QKeyEvent *ev)
 {
     m_param.key_code = ev->key();
-
-    renderImg();
+    if(m_hasPlugin){
+        renderImg();
+    }
 }
 
 void RenderWidget::dragEnterEvent(QDragEnterEvent *ev)
@@ -120,6 +142,8 @@ void RenderWidget::dropEvent(QDropEvent *ev)
     if(ev->mimeData()->hasUrls()){
         QString fileName = ev->mimeData()->urls().at(0).toLocalFile();
         loadPlugin(fileName);
-        renderImg();
+        if(m_hasPlugin){
+            renderImg();
+        }
     }
 }

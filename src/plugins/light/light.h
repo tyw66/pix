@@ -1,10 +1,11 @@
 #ifndef FUNNYFACE_H
 #define FUNNYFACE_H
 
-#include <QObject>
-#include <QColor>
 #include "interface.h"
 #include "shape.h"
+
+#include <QObject>
+#include <QColor>
 
 /**
  * @brief 光

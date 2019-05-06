@@ -260,8 +260,8 @@ public:
 
 };
 
-//! 心形线
-//! x^2+(y-x^(2/3))^2=1
+//! 心型线方程：x^2+(y-x^(2/3))^2=1
+//! 数值范围 X：-1.0～1.0 ； Y：-1.0～1.5
 class Heart : public Shape{
 public:
     double size;

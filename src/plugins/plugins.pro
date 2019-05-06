@@ -5,4 +5,5 @@ SUBDIRS  = \
 	circle \
 	funnyface \
 	light \
+    Heart
 
