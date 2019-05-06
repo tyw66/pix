@@ -11,15 +11,12 @@ RenderWidget::RenderWidget(QWidget *parent) : QWidget(parent)
     setMouseTracking(true);
     setAcceptDrops(true);
 
-    m_image = QImage(512,512,QImage::Format_RGB32);
+    m_image = new QImage(512,512,QImage::Format_RGB32);
     m_label = new QLabel(tr("Please drag file to draw."),this);
 
-    if(!loadPlugin()){
-        return;
+    if(loadPlugin()){
+        renderImg();
     }
-
-
-    renderImg();
 }
 
 void RenderWidget::resizeEvent(QResizeEvent *ev)
@@ -33,13 +30,14 @@ bool RenderWidget::loadPlugin()
     QDir pluginDir("./plugin");
 
     foreach (QString fileName, pluginDir.entryList(QDir::Files)) {
-        if(fileName == "default.dll"){//默认加载default.dll
+//        if(fileName == "default.dll"){//默认加载default.dll
             QString filePathName = pluginDir.absoluteFilePath(fileName);
             if(loadPlugin(filePathName)){
                 return true;
             }
-        }
+//        }
     }
+
     return false;
 }
 
@@ -57,13 +55,13 @@ bool RenderWidget::loadPlugin(const QString fileName)
 
     m_label->setText(tr("Could not load the plugin."));
     m_label->show();
-//    QMessageBox::information(this, "Error",tr("Could not load the plugin."));
+    //    QMessageBox::information(this, "Error",tr("Could not load the plugin."));
     return false;
 }
 
 void RenderWidget::renderImg()
 {
-    m_interface->paintImg(m_image, m_param);
+    m_interface->paintImg(*m_image, m_param);
     update();
 }
 
@@ -71,14 +69,15 @@ void RenderWidget::renderImg()
 void RenderWidget::paintEvent(QPaintEvent *ev)
 {
     QPainter p(this);
-    p.drawImage(ev->rect(),m_image);
+    p.setRenderHint(QPainter::Antialiasing, true);
+    p.drawImage(ev->rect(),*m_image);
 }
 
 void RenderWidget::mouseMoveEvent(QMouseEvent *ev)
 {
     m_param.mouse_posX = ev->x();
     m_param.mouse_posY = ev->y();
-//    qDebug() << m_param.mouse_posX;
+    //    qDebug() << m_param.mouse_posX;
 
     renderImg();
 }

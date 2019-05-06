@@ -7,24 +7,25 @@ FunnyFacePlugin::FunnyFacePlugin(QObject *parent) :
     QObject(parent)
 {
     m_faceColor = Color(250,211,94);
-    m_mouth1Color = Color(20,20,20);
+    m_darkGrayColor = Color(20,20,20);
     m_mouth2Color = Color(124,64,12);
     m_faceRedColor = Color(255,190,130);
-
+    m_blackColor = Color(0,0,0);
+    m_whiteColor = Color(255, 255, 255);
 }
 
 void FunnyFacePlugin::paintImg(QImage &img, const Param &param)
 {
-    //鼠标位置
-    double mx = (double)param.mouse_posX / (double)param.drawArea_width;
-    double my = (double)param.mouse_posY / (double)param.drawArea_height;
+    //归一化鼠标位置
+    double mx = param.mouse_posX * 1.0 / param.drawArea_width;
+    double my = param.mouse_posY * 1.0 / param.drawArea_height;
 
 #pragma omp parallel for
     for(int j = 0; j < img.height(); ++j){
         for(int i = 0; i < img.width(); ++i){
             //当前像素位置
-            double px = (double)i / (double)img.width();
-            double py = (double)j / (double)img.height();
+            double px = i *1.0 / img.width();
+            double py = j *1.0 / img.height();
             //着色
             img.setPixel(i, j, sample(px, py, mx, my).rgb());
         }
@@ -56,7 +57,7 @@ QColor FunnyFacePlugin::sample(double px, double py, double mx, double my)
     }
 
     //嘴巴
-    Circle mouth_top(0,-10, m_mouth1Color, 82);
+    Circle mouth_top(0,-10, m_darkGrayColor, 82);
     Circle mouth_buttom(0,0, m_mouth2Color, 80);
     Ring r(mouth_buttom,mouth_top);
     if(r.isContain(xPos,yPos)){
@@ -65,11 +66,11 @@ QColor FunnyFacePlugin::sample(double px, double py, double mx, double my)
 
 
     //眉毛
-    Circle c0(0,-300, Color(124,64,12), 240);
-    Circle c1(-55,-60, Color(20, 20, 20), 15);
-    Circle c2(-55,-60, Color(20,20,20), 10);
-    Circle c3(55,-60, Color(20, 20, 20), 15);
-    Circle c4(55,-60, Color(20,20,20), 10);
+    Circle c0(0,-300, m_mouth2Color, 240);
+    Circle c1(-55,-60, m_darkGrayColor, 15);
+    Circle c2(-55,-60, m_darkGrayColor, 10);
+    Circle c3(55,-60, m_darkGrayColor, 15);
+    Circle c4(55,-60, m_darkGrayColor, 10);
     BendShape eyebrow1(c1,c2,c0);
     BendShape eyebrow2(c3,c4,c0);
     if(eyebrow1.isContain(xPos,yPos) || eyebrow2.isContain(xPos,yPos)){
@@ -84,31 +85,31 @@ QColor FunnyFacePlugin::sample(double px, double py, double mx, double my)
     }
 
     //左眼睛
-    Rect rect1(-80,-45,Color(255,255,255),50,16);
-    Circle cLeft(-80,-37, Color(20, 20, 20), 8);
-    Circle cRight(-30,-37, Color(20,20,20), 8);
+    Rect rect1(-80,-45,m_whiteColor,50,16);
+    Circle cLeft(-80,-37, m_darkGrayColor, 8);
+    Circle cRight(-30,-37, m_darkGrayColor, 8);
     Capsule eye1(rect1, cLeft,cRight);
     if(eye1.isContain(xPos, yPos)){
         color.setRgb(rect1.fColor.r,rect1.fColor.g,rect1.fColor.b);
     }
 
     //右眼睛
-    Rect rect2(30,-45,Color(255, 255, 255),50,16);
-    Circle cLeft2(80,-37, Color(20, 20, 20), 8);
-    Circle cRight2(30,-37, Color(20,20,20), 8);
+    Rect rect2(30,-45,m_whiteColor,50,16);
+    Circle cLeft2(80,-37, m_darkGrayColor, 8);
+    Circle cRight2(30,-37, m_darkGrayColor, 8);
     Capsule eye2(rect2, cLeft2, cRight2);
     if(eye2.isContain(xPos, yPos)){
         color.setRgb(rect2.fColor.r,rect1.fColor.g,rect1.fColor.b);
     }
 
     //左眼珠（变化范围 -80~-30）
-    Circle ball1(-80+mx*50,-37, Color(20,20,20), 8);//随鼠标动
+    Circle ball1(-80+mx*50,-37, m_darkGrayColor, 8);//随鼠标动
     if(ball1.isContain(xPos, yPos)){
         color.setRgb(ball1.fColor.r,ball1.fColor.g,ball1.fColor.b);
     }
 
     //右眼珠（变化范围 30~80）
-    Circle ball2(30+mx*50,-37, Color(20,20,20), 8); //随鼠标动
+    Circle ball2(30+mx*50,-37, m_darkGrayColor, 8); //随鼠标动
     if(ball2.isContain(xPos, yPos)){
         color.setRgb(ball2.fColor.r,ball1.fColor.g,ball1.fColor.b);
     }

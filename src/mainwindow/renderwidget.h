@@ -48,7 +48,7 @@ private:
 private:
     ImgInterface* m_interface;
     Param m_param;
-    QImage m_image;            //图像数据
+    QImage* m_image;            //图像数据
 
     QLabel* m_label;
 

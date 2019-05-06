@@ -1,4 +1,4 @@
-TARGET = FunnyFace
+TARGET = Light
 TEMPLATE = lib
 CONFIG += plugin
 
@@ -6,11 +6,12 @@ DESTDIR = $${PWD}/../../../bin/plugin
 
 INCLUDEPATH += ../../mainwindow
 
-SOURCES += \
-    funnyfaceplugin.cpp
-
 HEADERS += \
-    funnyfaceplugin.h
+    light.h
+
+SOURCES += \
+    light.cpp
+
 
 
 QMAKE_CXXFLAGS += -fopenmp

@@ -9,12 +9,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     setWindowTitle(tr("Pix"));
+    setWindowFlags(Qt::WindowStaysOnTopHint);
     setGeometry(300,300,600,600);
     setMinimumSize(256,256);
 
 
-    for(int i = 0; i < 4; ++i){
-        for(int j = 0; j < 8; ++j){
+    m_row = 2;
+    m_col = 2;
+
+
+    for(int i = 0; i < m_row; ++i){
+        for(int j = 0; j < m_col; ++j){
             RenderWidget *renderWindow = new RenderWidget(this);
             ui->mainLayout->addWidget(renderWindow,i,j);
             m_renderWindows.append(renderWindow);
@@ -33,8 +38,8 @@ MainWindow::~MainWindow()
 void MainWindow::on_actionOne_triggered()
 {
     int index = 0;
-    for(int i = 0; i < 4; ++i){
-        for(int j = 0; j < 8; ++j){
+    for(int i = 0; i < m_row; ++i){
+        for(int j = 0; j < m_col; ++j){
             m_renderWindows.at(index++)->hide();
         }
     }
@@ -44,8 +49,8 @@ void MainWindow::on_actionOne_triggered()
 void MainWindow::on_actionTwo_triggered()
 {
     int index = 0;
-    for(int i = 0; i < 4; ++i){
-        for(int j = 0; j < 8; ++j){
+    for(int i = 0; i < m_row; ++i){
+        for(int j = 0; j < m_col; ++j){
             m_renderWindows.at(index++)->hide();
         }
     }
@@ -56,8 +61,8 @@ void MainWindow::on_actionTwo_triggered()
 void MainWindow::on_actionFour_triggered()
 {
     int index = 0;
-    for(int i = 0; i < 4; ++i){
-        for(int j = 0; j < 8; ++j){
+    for(int i = 0; i < m_row; ++i){
+        for(int j = 0; j < m_col; ++j){
             m_renderWindows.at(index++)->hide();
         }
     }
@@ -70,9 +75,10 @@ void MainWindow::on_actionFour_triggered()
 void MainWindow::on_actionAll_triggered()
 {
     int index = 0;
-    for(int i = 0; i < 4; ++i){
-        for(int j = 0; j < 8; ++j){
+    for(int i = 0; i < m_row; ++i){
+        for(int j = 0; j < m_col; ++j){
             m_renderWindows.at(index++)->show();
         }
     }
 }
+

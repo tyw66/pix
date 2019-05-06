@@ -28,10 +28,15 @@ private slots:
 
     void on_actionAll_triggered();
 
+
 private:
     Ui::MainWindow *ui;
 
     QList<RenderWidget*> m_renderWindows;
+
+    int m_row;
+    int m_col;
+
 
 };
 

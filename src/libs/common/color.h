@@ -8,18 +8,18 @@
 class Color3
 {
 public:
-    unsigned int r,g,b;
+    int r,g,b;
 
     //! 构造函数
     Color3(){
         r = g = b = 0;
     }
     //! 构造函数
-    Color3(unsigned int v) {
+    Color3(int v) {
         r =  g = b = v>255?255:v;
     }
     //! 构造函数
-    Color3(unsigned int r_, unsigned int g_, unsigned int b_){
+    Color3(int r_, int g_, int b_){
         r = r_>255?255:r_;  g = g_>255?255:g_;  b = b_>255?255:b_;
     }
 
