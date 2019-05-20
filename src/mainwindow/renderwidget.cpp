@@ -12,7 +12,7 @@ RenderWidget::RenderWidget(QWidget *parent) : QWidget(parent)
     setMouseTracking(true);
     setAcceptDrops(true);
 
-    m_image = new QImage(100,100,QImage::Format_RGB32);
+    m_image = new QImage(256,256,QImage::Format_RGB32);
     m_label = new QLabel(tr("Please drag file to draw."),this);
 
     m_timer.start(50);
