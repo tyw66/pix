@@ -20,27 +20,35 @@
 
 - #### **代码文件夹：**
 
-  - pix  ┬ bin：编译结果。二进制文件
-
-  ​			   ├ src ┬ mainwindow：框架。主窗口，定义了接口，以及主界面与绘图区域等 
-
-     			│	    ├ plugins：插件。coder们可以提供接口实现（一些有趣的效果），写自己的插件。
-
-     			│  	  └ libs：通用的。定义了一些公用的数据结构啊和变换函数等（暂定）。
-
-     			└ readme.md：本文档。
-
+	pix	┬ bin：编译结果。二进制文件。
+	
+		├ src	┬ mainwindow：框架。主窗口，定义了接口，以及主界面与绘图区域等 。
+		
+		│		├ plugins：插件。coder们可以提供接口实现（一些有趣的效果），写自己的插件。
+		
+		│		└ libs：通用的。定义了一些公用的数据结构啊和变换函数等（暂定）。
+		
+		└ readme.md：本文档。
+      
 - #### **使用方法：**
 
   - 拖拽plugin文件夹内的插件到窗口即可加载。
 
 - #### **程序截图：**
 
-![img](./screenshot/demo.gif)
+  - screenshot:
 
-​	Link: [滑稽大军传送门](https://www.zhihu.com/question/51314788/answer/673470214)
+    ![img](./screenshot/demo.gif)
+
+  - Link: [滑稽大军传送门](https://www.zhihu.com/question/51314788/answer/673470214)
 
 
+
+
+
+
+
+------
 
 ###### have fun !
 
